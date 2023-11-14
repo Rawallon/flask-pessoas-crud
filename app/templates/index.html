@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pessoa Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Pessoa Management</h1>
+
+        <table id="pessoa-table" class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Data de Admissão</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <button id="add-pessoa" class="button is-primary">Add Pessoa</button>
+    </div>
+
+    <script>
+        // Fetch data from the API endpoint
+        async function fetchData() {
+            const response = await fetch("http://localhost:8000/api/pessoas/");
+            const data = await response.json();
+            return data;
+        }
+
+        // Render data in the table
+        async function renderTable() {
+            const tableBody = document.querySelector("#pessoa-table tbody");
+            tableBody.innerHTML = "";
+
+            const pessoas = await fetchData();
+
+            pessoas.forEach((pessoa) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${pessoa.nome}</td>
+                    <td>${new Date(pessoa.data_admissao).toLocaleDateString('pt-BR')}</td>
+                    <td>
+                        <a href="#" class="edit" data-id="${pessoa.id}">Edit</a> |
+                        <a href="#" class="delete" data-id="${pessoa.id}">Delete</a>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            document.querySelectorAll(".edit").forEach(link => {
+                link.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const pessoaId = event.target.getAttribute("data-id");
+                    alert(`TODO: Edit Pessoa with ID ${pessoaId}`);
+                });
+            });
+
+            document.querySelectorAll(".delete").forEach(link => {
+                link.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const pessoaId = event.target.getAttribute("data-id");
+                    alertTODO: (`Delete Pessoa with ID ${pessoaId}`);
+                });
+            });
+        }
+
+        document.querySelector("#add-pessoa").addEventListener("click", () => {
+            alert("TODO: Add Pessoa");
+        });
+
+        renderTable();
+    </script>
+</body>
+</html>
