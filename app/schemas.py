@@ -10,7 +10,7 @@ class PessoaBase(BaseModel):
     cpf: str
     data_nascimento: datetime
     data_admissao: datetime
-    funcao: Optional[str]
+    funcao: Optional[str] = None
 
     @validator("data_nascimento", pre=True)
     def parse_data_nascimento(cls, value):
