@@ -1,8 +1,14 @@
 from fastapi import FastAPI
+from app import models
+
+from app.database import engine
+from app.routers.pessoas import pessoasRouter
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+app = FastAPI(
+    title="Pessoas Conhecidas Inc.", description="Lista todas as pessoas conhecidas"
+)
+app.include_router(pessoasRouter, prefix="", tags=["pessoa"])
