@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app import models, fill_db
 
+from app import fill_db, models
 from app.database import engine
 from app.routers.pessoas import pessoasRouter
 

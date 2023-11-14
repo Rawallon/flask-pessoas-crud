@@ -3,8 +3,13 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from app.crud import (create_pessoa, delete_pessoa, get_pessoa, get_pessoas,
-                  update_pessoa)
+from app.crud import (
+    create_pessoa,
+    delete_pessoa,
+    get_pessoa,
+    get_pessoas,
+    update_pessoa,
+)
 from app.database import SessionLocal as Session
 from app.models import Pessoa
 from app.schemas import PessoaCreate, PessoaView
