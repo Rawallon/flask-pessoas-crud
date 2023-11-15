@@ -12,30 +12,17 @@ class PessoaBase(BaseModel):
     data_admissao: datetime
     funcao: Optional[str] = None
 
-    @validator("data_nascimento", pre=True)
-    def parse_data_nascimento(cls, value):
-        return cls.parse_datetime(value)
-
-    @validator("data_admissao", pre=True)
-    def parse_data_admissao(cls, value):
-        return cls.parse_datetime(value)
-
-    @classmethod
-    def parse_datetime(cls, value):
-        if isinstance(value, str):
-            try:
-                return datetime.strptime(value, "%d-%m-%Y")
-            except ValueError as e:
-                raise ValueError("Invalid datetime format. Use '%d-%m-%Y'") from e
-        return value
-
 
 class PessoaView(PessoaBase):
+    id_pessoa: int
+
+
+class PessoaEdit(PessoaBase):
     pass
 
 
 class PessoaCreate(PessoaBase):
-    id_pessoa: int
+    pass
 
     class Config:
         orm_mode = True

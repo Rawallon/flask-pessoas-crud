@@ -12,7 +12,7 @@ from app.crud import (
 )
 from app.database import SessionLocal as Session
 from app.models import Pessoa
-from app.schemas import PessoaCreate, PessoaView
+from app.schemas import PessoaCreate, PessoaEdit, PessoaView
 
 pessoasRouter = APIRouter()
 
@@ -30,7 +30,6 @@ def get_db():
 def create_person(pessoa: PessoaCreate, db: Session = Depends(get_db)):
     print("pessoa", pessoa)
     pessoa_model = Pessoa(
-        id_pessoa=pessoa.id_pessoa,
         nome=pessoa.nome,
         rg=pessoa.rg,
         cpf=pessoa.cpf,
@@ -80,7 +79,7 @@ def read_people(
 
 
 @pessoasRouter.put("/pessoas/{id_pessoa}", response_model=PessoaView)
-def update_person(id_pessoa: int, pessoa: PessoaView, db: Session = Depends(get_db)):
+def update_person(id_pessoa: int, pessoa: PessoaEdit, db: Session = Depends(get_db)):
     existing_pessoa = get_pessoa(db=db, id_pessoa=id_pessoa)
     if existing_pessoa is None:
         raise HTTPException(status_code=404, detail="PessoaView not found")

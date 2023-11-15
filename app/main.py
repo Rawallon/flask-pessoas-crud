@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 from app import fill_db, models
 from app.database import engine
@@ -11,6 +11,7 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="Pessoas Conhecidas Inc.", description="Lista todas as pessoas conhecidas"
 )
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 fill_db.fill_db()
 app.include_router(pessoasRouter, prefix="/api")
